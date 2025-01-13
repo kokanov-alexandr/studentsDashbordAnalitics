@@ -1,12 +1,10 @@
+import sys
+sys.path.append("..")
+from index import load_data
 import streamlit as st
 import pandas as pd
 
-@st.cache_data
-def load_data(filename):
-    df = pd.read_csv(filename)
-    return df
-
-data = load_data('student-por.csv')
+data = load_data()
 st.header("Набор данных")
 
 search_term = st.text_input("Поиск по данным:", "")
