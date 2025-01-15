@@ -1,16 +1,16 @@
 import sys
 sys.path.append("..")
-from index import loadData
+from Alcohol_consumption import loadData
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
 data = loadData()
+
 def display_heatmap(columLabels, title):
     correlationVars = list(columLabels.keys())
     correlationMatrix = data[correlationVars].corr()
-
-    fig = px.imshow(
+    fig = px.imshow(    
         correlationMatrix,
         labels=dict(color="Корреляция"),
         x=list(columLabels.values()),
@@ -35,7 +35,7 @@ gColumLabels = {
     'studytime': 'Время на учебу', 
     'absences': 'Кол-во пропусков',
     'goout': 'Час-та прогулок',
-    'Pedu': 'Образование род-ей'
+    'Pedu': 'Образование род-ей',
 }
 
 alcoColumLabels = {
@@ -49,12 +49,6 @@ alcoColumLabels = {
 }
 
 
+st.title("Тепловые карты корреляций")
 display_heatmap(gColumLabels, "Корреляция успеваемости с факторами обучения")
 display_heatmap(alcoColumLabels, "Корреляция социальных факторов и употребления алкоголя")
-
-st.markdown("""
-    #### Значения корреляции:
-    - От -1 до 1, где:
-    - 1: сильная положительная корреляция
-    - 0: нет корреляции 
-    - -1: сильная отрицательная корреляция""") 

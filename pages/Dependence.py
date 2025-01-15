@@ -1,22 +1,22 @@
 import sys
 sys.path.append("..")
-from index import loadData
+from Alcohol_consumption import loadData
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-st.title("Анализ зависимостей")
+st.title("Зависимость успеваемости от внешних факторов")
 data = loadData()
 
 dependencies = {
-    'Время в пути - Оценки': ('traveltime', 'Время в пути'),
-    'Время на учёбу - Оценки': ('studytime', 'Время на учёбу'),
-    'Пропуски - Оценки': ('absences', 'Количество пропусков'),
-    'Свободное время - Оценки': ('freetime', 'Свободное время'),
-    'Наличие отношений - Оценки': ('romantic', 'Наличие отношений'),
-    'Употребеление алкоголя в бедние дни - Оценки': ('Dalc', 'Употребеление алкоголя в бедние дни'),
-    'Употребеление алкоголя в выходные дни - Оценки': ('Walc', 'Употребеление алкоголя в выходные дни'),
-    'Образование родителей - Оценки': ('Pedu', 'Образование родителей')
+    'Время в пути': ('traveltime', 'Время в пути'),
+    'Время на учёбу': ('studytime', 'Время на учёбу'),
+    'Пропуски': ('absences', 'Количество пропусков'),
+    'Свободное время': ('freetime', 'Свободное время'),
+    'Наличие отношений': ('romantic', 'Наличие отношений'),
+    'Употребеление алкоголя в будние дни': ('Dalc', 'Употребеление алкоголя в будние дни'),
+    'Употребеление алкоголя в выходные дни': ('Walc', 'Употребеление алкоголя в выходные дни'),
+    'Образование родителей ': ('Pedu', 'Образование родителей')
 }
 
 finalAssessmentPropName = 'G3'
@@ -29,3 +29,7 @@ figStrip = px.strip(data, x= xColumn, y=finalAssessmentPropName,
                 labels={xColumn: xLabel, finalAssessmentPropName: 'Итоговая оценка'},
                 title=f"Зависимость оценок")    
 st.plotly_chart(figStrip)
+figBox = px.box(data, x=xColumn, y=finalAssessmentPropName,
+            labels={xColumn: xLabel, finalAssessmentPropName: 'Итоговая оценка'},
+            title=f"Распределение оценок")
+st.plotly_chart(figBox)
