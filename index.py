@@ -7,8 +7,8 @@ fileName = 'student-por.csv'
 @st.cache_resource
 def loadData():
     df = pd.read_csv(fileName)
+    df['Pedu'] = df['Medu'] + df['Fedu']
     return df
-
 
 if __name__ == "__main__":
     st.title("Распределение данных")

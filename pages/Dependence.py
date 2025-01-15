@@ -6,9 +6,7 @@ import pandas as pd
 import plotly.express as px
 
 st.title("Анализ зависимостей")
-
 data = loadData()
-
 
 dependencies = {
     'Время в пути - Оценки': ('traveltime', 'Время в пути'),
@@ -17,7 +15,8 @@ dependencies = {
     'Свободное время - Оценки': ('freetime', 'Свободное время'),
     'Наличие отношений - Оценки': ('romantic', 'Наличие отношений'),
     'Употребеление алкоголя в бедние дни - Оценки': ('Dalc', 'Употребеление алкоголя в бедние дни'),
-    'Употребеление алкоголя в выходные дни - Оценки': ('Walc', 'Употребеление алкоголя в выходные дни')
+    'Употребеление алкоголя в выходные дни - Оценки': ('Walc', 'Употребеление алкоголя в выходные дни'),
+    'Образование родителей - Оценки': ('Pedu', 'Образование родителей')
 }
 
 finalAssessmentPropName = 'G3'
@@ -30,4 +29,3 @@ figStrip = px.strip(data, x= xColumn, y=finalAssessmentPropName,
                 labels={xColumn: xLabel, finalAssessmentPropName: 'Итоговая оценка'},
                 title=f"Зависимость оценок")    
 st.plotly_chart(figStrip)
-    
