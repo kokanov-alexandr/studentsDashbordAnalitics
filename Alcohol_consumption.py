@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import seaborn as sns
+
 fileName = 'student-por.csv'
 
 @st.cache_resource
@@ -20,7 +20,7 @@ def create_average_alcohol_chart(data, x_column):
         y=['Dalc', 'Walc'],
         barmode='group',
         title='Среднее употребление алкоголя по возрасту',
-          labels={
+        labels={
             'value': 'Среднее употребление',
             'age': 'Возраст',
             'sex': 'Пол',
@@ -36,14 +36,12 @@ def create_average_alcohol_chart(data, x_column):
     )
     st.plotly_chart(fig, use_container_width=True)
 
-
-
 if __name__ == "__main__":
     st.title("Употребление алкоголя")
     st.write("**Dalc** - Употребление алкоголя в будние дни")
     st.write("**Walc** - Употребление алкоголя в выходные дни")
 
-    tab1, tab2, tab3 = st.tabs(["Пол", "Возраст", "Желание получить высшее образование"])
+    tab1, tab2, tab3, tab4 = st.tabs(["Пол", "Возраст", "Желание получить высшее образование", "Итоговая оценка"])
 
     with tab1:
         create_average_alcohol_chart(data, 'sex')
@@ -51,11 +49,11 @@ if __name__ == "__main__":
     with tab2:
         create_average_alcohol_chart(data, 'age')
 
-
     with tab3:
         create_average_alcohol_chart(data, 'higher')
 
+    with tab4:
+        create_average_alcohol_chart(data, 'G3')
 
 
-    
     

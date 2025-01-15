@@ -2,7 +2,6 @@ import sys
 sys.path.append("..")
 from Alcohol_consumption import loadData
 import streamlit as st
-import pandas as pd
 import plotly.express as px
 
 data = loadData()
@@ -15,14 +14,12 @@ def display_heatmap(columLabels, title):
         labels=dict(color="Корреляция"),
         x=list(columLabels.values()),
         y=list(columLabels.values()),
-        color_continuous_scale="RdBu",
-        aspect="auto"
+        color_continuous_scale="RdBu"
     )
+    
     fig.update_traces(text=correlationMatrix.round(2), texttemplate="%{text}")
     fig.update_layout(
         title=title,
-        xaxis_title="",
-        yaxis_title="",
         width=800,
         height=600
     )
