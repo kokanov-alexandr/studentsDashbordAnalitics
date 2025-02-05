@@ -25,26 +25,28 @@ columnOptions = list(dependencies.keys())
 selectedDelepdence = st.selectbox('Выберите зависимость:', columnOptions)
 xColumn, xLabel = dependencies[selectedDelepdence]
 
-tab1, tab2, tab3 = st.tabs(["Точечная диаграмма", "Ящик с усами", "Средние значения"])
+if __name__ == "__main__":
+    col1, col2 = st.columns(2)
+    defaultHeight= 370
+    with col1:
+        figStrip = px.strip(data, x=xColumn, y=finalAssessmentPropName,
+                    labels={xColumn: '', finalAssessmentPropName: ''}, height = defaultHeight)
+        st.plotly_chart(figStrip, use_container_width=True)
 
-with tab1:
-    figStrip = px.strip(data, x=xColumn, y=finalAssessmentPropName,
-                    labels={xColumn: xLabel, finalAssessmentPropName: 'Итоговая оценка'},
-                    title=f"Зависимость успеваемости")    
-    st.plotly_chart(figStrip)
+        figBox = px.box(data, x=xColumn, y=finalAssessmentPropName,
+                    labels={xColumn: '', finalAssessmentPropName: ''}, height = defaultHeight)
+        figBox.update_layout(xaxis_showticklabels=False, yaxis_showticklabels=False) 
+        st.plotly_chart(figBox, use_container_width=True)
 
-with tab2:
-    figBox = px.box(data, x=xColumn, y=finalAssessmentPropName,
-                labels={xColumn: xLabel, finalAssessmentPropName: 'Итоговая оценка'},
-                title=f"Распределение успеваемости")
-    st.plotly_chart(figBox)
-
-with tab3:
-    average_data = data.groupby(xColumn)[finalAssessmentPropName].mean().reset_index()
-    figMean = px.bar(average_data, 
-                     x=xColumn, 
+    with col2:
+        average_data = data.groupby(xColumn)[finalAssessmentPropName].mean().reset_index()
+        figMean = px.bar(average_data,
+                     x=xColumn,
                      y=finalAssessmentPropName,
-                     labels={xColumn: xLabel, finalAssessmentPropName: 'Средняя итоговая оценка'},
-                     title="Средние значения оценок")
-    figMean.update_traces(marker=dict(line=dict(width=0)))
-    st.plotly_chart(figMean)
+                     labels={xColumn: '', finalAssessmentPropName: ''}, height = defaultHeight)
+        figMean.update_traces(marker=dict(line=dict(width=0)))
+        st.plotly_chart(figMean, use_container_width=True)
+
+        figPie = px.pie(data, values='G3', names=xColumn,
+                         labels={xColumn: '', 'average': ''}, height=defaultHeight)
+        st.plotly_chart(figPie, use_container_width=True)

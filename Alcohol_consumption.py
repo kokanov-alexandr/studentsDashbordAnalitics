@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import matplotlib.pyplot as plt
 
 fileName = 'student-por.csv'
 
@@ -19,20 +20,24 @@ def create_average_alcohol_chart(data, x_column):
         x=x_column,
         y=['Dalc', 'Walc'],
         barmode='group',
-        title='Среднее употребление алкоголя по возрасту',
         labels={
-            'value': 'Среднее употребление',
+            'value': '',
             'age': 'Возраст',
             'sex': 'Пол',
             'school': 'Школа',
-            'higher': 'Высшее образование'
+            'higher': 'Высшее образование',
+            'variable': 'Алкоголь' 
         },
         color_discrete_sequence=px.colors.qualitative.Plotly
     )
     fig.update_traces(marker=dict(line=dict(width=0)))
     fig.update_layout(
         bargap=0.1,
-        legend_title_text='Алкоголь'
+        legend_orientation="h",
+        legend_x=0.5,
+        legend_y=1.15, 
+        legend=dict(xanchor="center", yanchor="top"),
+        height = 370
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -41,19 +46,18 @@ if __name__ == "__main__":
     st.write("**Dalc** - Употребление алкоголя в будние дни")
     st.write("**Walc** - Употребление алкоголя в выходные дни")
 
-    tab1, tab2, tab3, tab4 = st.tabs(["Пол", "Возраст", "Желание получить высшее образование", "Итоговая оценка"])
 
-    with tab1:
+    col1, col2 = st.columns(2)
+
+    with col1:
         create_average_alcohol_chart(data, 'sex')
-
-    with tab2:
         create_average_alcohol_chart(data, 'age')
 
-    with tab3:
+    with col2:
         create_average_alcohol_chart(data, 'higher')
-
-    with tab4:
         create_average_alcohol_chart(data, 'G3')
+
+
 
 
     
