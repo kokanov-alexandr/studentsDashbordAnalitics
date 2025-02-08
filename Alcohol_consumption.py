@@ -1,7 +1,6 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import matplotlib.pyplot as plt
 
 fileName = 'student-por.csv'
 
@@ -24,8 +23,9 @@ def create_average_alcohol_chart(data, x_column):
             'age': 'Возраст',
             'sex': 'Пол',
             'school': 'Школа',
-            'higher': 'Высшее образование',
-            'variable': 'Алкоголь' 
+            'higher': 'Желание иметь высшее образование',
+            'G3': 'Итоговая оценка',
+            'variable': 'Алкоголь'
         },
         color_discrete_sequence=px.colors.qualitative.Plotly
     )
@@ -72,8 +72,6 @@ filter_columns_mapping = {
         'Состояние здоровья': 'health',
         'Количество пропущенных занятий': 'absences'
 }
-
-
 
 
 if __name__ == "__main__":
